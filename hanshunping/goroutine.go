@@ -6,8 +6,9 @@ import (
 )
 
 /*
-	go
- */
+	go 程
+	chan 通道
+*/
 func main() {
 
 	go cyclic()
@@ -19,10 +20,10 @@ func main() {
 
 /*
 	打印-\|/
- */
+*/
 func cyclic() {
 	for {
-		for _, x := range `-\|/`{
+		for _, x := range `-\|/` {
 			fmt.Printf("\r%c", x)
 			time.Sleep(220 * time.Millisecond)
 		}
@@ -33,9 +34,12 @@ func fibnacci(n int64) int64 {
 	if n < 2 {
 		return n
 	}
-	return fibnacci(n - 1) + fibnacci(n - 2)
+	return fibnacci(n-1) + fibnacci(n-2)
 }
 
+/*
+	将数组每个元素平方，然后打印
+*/
 func testMapReduce() {
 	ch1 := make(chan int)
 	ch2 := make(chan int)
@@ -51,7 +55,7 @@ func testMapReduce() {
 
 	go func() {
 		for i := 0; i < 10; i++ {
-			tmp := <- ch1
+			tmp := <-ch1
 			ch2 <- tmp * tmp
 		}
 		close(ch2)
@@ -59,7 +63,7 @@ func testMapReduce() {
 
 	go func() {
 		for i := 0; i < 10; i++ {
-			fmt.Printf("%d <- ch2\n", <- ch2)
+			fmt.Printf("%d <- ch2\n", <-ch2)
 		}
 	}()
 }
